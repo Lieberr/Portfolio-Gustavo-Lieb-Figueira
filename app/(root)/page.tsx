@@ -1,7 +1,10 @@
+import Contact from "@/components/shared/contact";
 
 const HomePage = () => {
   return (
-    <></>
+    <>
+      <Contact />
+    </>
   )
 }
  
