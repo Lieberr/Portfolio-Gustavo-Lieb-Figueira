@@ -4,5 +4,53 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = env("DATABASE_URL")
+}
+
+model Project {
+  id           String   @id @default(cuid())
+
+  num          Int
+  tag          String
+  title        String
+  subtitle     String
+  description  String
+
+  github       String?
+  demo         String?
+  accent       String
+
+  featured     Boolean  @default(false)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  features     ProjectFeature[]
+  technologies ProjectTechnology[]
+}
+
+model ProjectFeature {
+  id        String  @id @default(cuid())
+  projectId String
+  feature   String
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Technology {
+  id        String @id @default(cuid())
+  name      String @unique
+  slug      String @unique
+
+  projects  ProjectTechnology[]
+}
+
+model ProjectTechnology {
+  projectId    String
+  technologyId String
+
+  project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  technology   Technology @relation(fields: [technologyId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, technologyId])
 }
