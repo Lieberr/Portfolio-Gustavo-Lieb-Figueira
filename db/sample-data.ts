@@ -6,6 +6,7 @@ const sampleData = {
             title: "LiebStore",
             subtitle: "Full-Stack E-commer Platform",
             description: "A production-grade e-commerce platform with complete auth, product management, shopping cart, order payments, and admin analytics. Built with a security-first mindset.",
+            github: "https://github.com/Lieberr/Lieb-Store",
             demo: "https://lieb-store.vercel.app",
             accent: "#6366f1",
             featured: true,
