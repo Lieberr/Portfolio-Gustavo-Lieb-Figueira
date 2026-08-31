@@ -20,27 +20,28 @@ interface Cat {
 const CATS: Cat[] = [
     {
         id: "frontend",
-        label: "FrontEnd",
+        label: "Frontend",
         glyph: "◈",
         summary: "Building UIs users love to interact with.",
         color: "var(--accent-light)",
         techs: [
             {name: "React", primary: true},
             {name: "Next.js", primary: true},
-            {name: "TypeScript", primary: true},
             {name: "Tailwind CSS", primary: true},
             {name: "TanStack Query", primary: true},
+            {name: "Framer Motion", primary: true},
             {name: "HTML5"},
             {name: "CSS3"},
             {name: "JavaScript"},
             {name: "TanStack Router"},
             {name: "React Router V7"},
-            {name: "Strapi"},
+            
+            
         ],
     },
     {
         id: "backend",
-        label: "BackEnd",
+        label: "Backend",
         glyph: "⬡",
         summary: "Designing APIs and server logic that scale",
         color: "var(--violet)",
@@ -48,10 +49,12 @@ const CATS: Cat[] = [
             {name: "Node.js", primary: true},
             { name: "Java", primary: true },
             { name: "Spring Boot", primary: true },
+            {name: "TypeScript", primary: true},
             { name: "Python" },
             { name: "Flask" },
             { name: "REST APIs" },
             { name: "C" },
+            {name: "Strapi"},
         ],
     },
     {
@@ -90,13 +93,14 @@ const CATS: Cat[] = [
     },
     {
         id: "security",
-        label: "Security",
+        label: "Security & Validations",
         glyph: "⊛",
         summary: "Building systems users can trust.",
         color: "#f87171",
         techs: [
             { name: "JWT", primary: true },
             { name: "OAuth 2.0", primary: true },
+            {name: "Zod", primary: true},
             { name: "Authentication", primary: true },
             { name: "Authorization" },
             { name: "HTTPS / TLS" },
@@ -202,16 +206,152 @@ export default function Skills() {
                                                 isActive
                                                 ? "border-white/[0.06] bg-black/20"
                                                 : "border-[var(--border)] bg-[var(--surface2)]"
-                                            }`}>
-                                                
+                                            }`} style={{
+                                                color: isActive ? c.color : 'var(--text-3)'
+                                            }}>
+                                                {c.glyph}
                                             </div>
+
+                                            <div className="min-w-0">
+                                                <p className={`mb-0.5 text-sm font-semibold ${
+                                                    isActive ? "text-[var(--accent-light)]" : "text-[var(--text)]"
+
+                                                }`}>
+                                                    {c.label}
+                                                </p>
+
+                                                <p className="mono-xs text-[var(--text-3)]">
+                                                    {c.techs.length} technologies
+                                                </p>
+                                            </div>
+
+                                            {isActive && (
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-light)" strokeWidth="2" className="ml-auto shrink-0" > <path d="M9 18l6-6-6-6" /> </svg>
+                                            )}
                                     </button>
                             )
                         })}
                     </div>
+
+                    <div key={active} className={`reveal reveal-delay-2 ${
+                        visible ? "visible" : ""
+                    } animate-[slideUp_0.32s_ease_both]`}>
+                        <div className="card overflow-hidden">
+                            <div className="flex items-center gap-4 border-b border-[var(--border)]
+                            bg-[var(--surface2)] px-7 py-5">
+                                <div className="flex h-11 w-11 shrink-0 items-center justify-center
+                                rounded-xl border border-[var(--border-glow)] bg-[var(--accent-pale)] text-[22px]" style={{
+                                    color: cat.color
+                                }}>
+                                    {cat.glyph}
+                                </div>
+
+                                <div className="min-w-0">
+                                    <h3 className="h3 mb-[3px] text-[1.1rem]">
+                                        {cat.label}
+                                    </h3>
+
+                                    <p className="body-sm text-[var(--text-3)]">
+                                        {cat.summary}
+                                    </p>
+                                </div>
+
+                                <div className="badge ml-auto shrink-0">
+                                    {cat.techs.length} total
+                                </div>
+                            </div>
+
+                            <div className="p-7">
+                                <p className="mono-xs mb-4 uppercase tracking-[0.15em]" style={{
+                                    color: cat.color,
+                                    opacity: 0.8
+                                }}>
+                                    {"//"} core expertise
+                                </p>
+
+                                <div className="mb-7 flex flex-wrap gap-2.5">
+                                    {cat.techs
+                                    .filter((tech) => tech.primary)
+                                    .map((tech) => (
+                                        <TechChip
+                                        key={tech.name}
+                                        name={tech.name}
+                                        color={cat.color}
+                                        primary
+                                        />
+                                    ))}
+                                </div>
+
+                                {cat.techs.some((tech) => !tech.primary) && (
+                                    <>
+                                        <p className="mono-xs mb-3.5 uppercase tracking-[0.15em] text-[var(--text-4)]">
+                                            {"//"} also familiar with
+                                        </p>
+
+                                        <div className="flex flex-wrap gap-2">
+                                            {cat.techs
+                                            .filter((tech) => !tech.primary)
+                                            .map((tech) => (
+                                                <TechChip
+                                                key={tech.name}
+                                                name={tech.name}
+                                                color={cat.color}
+                                                />
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={`reveal reveal-delay-3 mt-7 flex flex-wrap gap-2 ${
+                    visible ? "visible" : ""
+                }`}>
+                    {CATS.flatMap((c) => c.techs).map((tech, index) => (
+                        <span key={`${tech.name}-${index}`} className="rounded-full border border-[var(--border)]
+                        px-2.5 py-[3px] font-[var(--font-mono)] text-[11px] text-[var(--text-4)]">
+                            {tech.name}
+                        </span>
+                    ))}
                 </div>
             </div>
             
         </section>
+    )
+}
+
+function TechChip({
+    name,
+    color,
+    primary = false
+}: {
+    name: string;
+    color: string;
+    primary?: boolean;
+}) {
+    return (
+        <div className={`inline-flex cursor-default items-center gap-2 rounded-[10px] transition-all duration-[180ms] hover:-translate-y-0.5 ${
+            primary ? "px-[18px] py-2.8" : "px-3.5 py-2"
+        }`} style={{
+            border: primary ? `1px solid ${color}33` : "1px solid var(--border)", background: primary ? `${color}0f` : "var(--surface2)"
+        }} onMouseEnter={(event) => event.currentTarget.style.borderColor = `${color}55`} onMouseLeave={(event) => {
+            event.currentTarget.style.borderColor = primary ? `${color}33` : "var(--border)";
+        }}>
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{
+                background: primary ? color : "var(--text-4)"
+            }} />
+
+            <span className="font-[var(--font-mono)]" style={{
+                fontSize: primary ? 14 : 13,
+                fontWeight: primary ? 600 : 400,
+                color: primary ? color : "var(--text-2)"
+            }}>
+                {name}
+            </span>
+                
+
+        </div>
     )
 }
