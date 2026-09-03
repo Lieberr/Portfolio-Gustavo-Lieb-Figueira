@@ -1,19 +1,16 @@
 'use client';
 
 import { useState, useEffect } from "react";
-
-interface NavProps {
-    theme: "dark" | "light";
-    onToggleTheme: () => void;
-};
+import { useTheme } from "../ThemeProvider";
 
 const LINKS = ["Home", "About", "Skills", "Projects", "Contact"];
 
 
-export default function NavBar({theme, onToggleTheme}: NavProps) {
+export default function NavBar() {
     const [scrolled, setScrolled] = useState(false);
     const [progress, setProgress] = useState(0);
     const [active, setActive] = useState("home");
+    const {theme, toggleTheme} = useTheme();
 
     useEffect(() => {
         const onScroll = () => {
@@ -101,7 +98,7 @@ export default function NavBar({theme, onToggleTheme}: NavProps) {
                         </div>
 
                         <div className="flex items-center gap-2">
-                            <button onClick={onToggleTheme}
+                            <button onClick={toggleTheme}
                             aria-label="Toggle Theme"
                             className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[9px] border border-[var(--border)]
                             bg-[var(--surface2)] text-[var(--text-2)] transition-all duration-200 hover:border-[var(--border-glow)] hover:text-[var(--accent-light)]">
