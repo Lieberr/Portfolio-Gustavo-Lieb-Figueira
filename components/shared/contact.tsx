@@ -1,6 +1,8 @@
 'use client';
 
+import { sendContactAcion } from "@/actions/contact";
 import { useEffect, useState, useRef } from "react";
+
 
 const SOCIALS = [
     {
@@ -100,16 +102,23 @@ export default function Contact() {
 
         setStatus("sending");
 
-        await new Promise((resolve) => setTimeout(resolve, 1200));
+        const result = await sendContactAcion(form);
 
-        setStatus("sent");
+        if(result.success) {
+            setStatus("sent");
 
-        setForm({
-            name: "",
-            email: "",
-            subject: "",
-            message: "",
-        })
+            setForm({
+                name: "",
+                email: "",
+                subject: "",
+                message: "",
+            });
+        } else {
+            setStatus("idle")
+
+            alert("Failed to send message. Please try again")
+        }
+        
     };
 
     return (
@@ -205,7 +214,7 @@ export default function Contact() {
                                     }
                                     `}>
                                         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px]
-                                        border border-[var(--border-glow)] bg-[var(--accent-pale)] text-[var(--acent-light)]">
+                                        border border-[var(--border-glow)] bg-[var(--accent-pale)] text-[var(--accent-light)]">
                                             {social.icon}
                                         </div>
 
