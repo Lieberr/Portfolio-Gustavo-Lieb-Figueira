@@ -148,7 +148,7 @@ export default function About() {
 
         {/* Stats row */}
         <div
-          className={`reveal ${visible ? "visible" : ""}`}
+          className={`reveal ${visible ? "visible" : ""} stats-grid`}
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
@@ -606,6 +606,29 @@ export default function About() {
         .tz-dot { flex-shrink: 0; }
         .tz-mob { display: none; }
         .tz-tags { justify-content: center; }
+
+        .stats-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+        /* Tablet */
+        @media (max-width: 860px) {
+          .stats-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          }
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+          .stats-grid {
+            grid-template-columns: 1fr !important;
+            gap: 10px !important;
+          }
+
+          .stats-grid .card {
+            padding: 16px 20px !important;
+          }
+        }
 
         /* ── Zigzag timeline — mobile ── */
         @media (max-width: 860px) {

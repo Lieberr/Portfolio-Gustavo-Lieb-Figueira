@@ -168,18 +168,26 @@ export default function Hero() {
 
                     {/*RIGHT*/}
                     <div className="anim-slide-up relative">
-                        <div className="mb-3.5 flex items-end justify-center gap-2.5">
+                        <div className="mb-3.5 hidden items-center justify-center gap-2.5 md:flex">
                             {TOP_BADGES.map((b, i) => (
                                 <span
-                                key={b.label}
-                                className="badge badge-accent animate-[float_5s_ease-in-out_infinite] text-[11px] opacity-70 shadow-[0_4px_18px_var(--accent-glow)]"
-                                style={{
-                                    animationDelay: b.delay,
-                                    animationDuration: `${5 + i * 0.5}s`,
-                                    marginTop: `${b.mt}px`,
-                                }}
+                                    key={b.label}
+                                    className="
+                                        badge badge-accent
+                                        w-fit justify-self-center
+                                        animate-[float_5s_ease-in-out_infinite]
+                                        text-[10px]
+                                        opacity-70
+                                        shadow-[0_4px_18px_var(--accent-glow)]
+                                        sm:text-[11px]
+                                    "
+                                    style={{
+                                        animationDelay: b.delay,
+                                        animationDuration: `${5 + i * 0.5}s`,
+                                        marginTop: `${b.mt}px`,
+                                    }}
                                 >
-                                {b.label}
+                                    {b.label}
                                 </span>
                             ))}
                         </div>
@@ -293,7 +301,7 @@ export default function Hero() {
                     </div>
                 </div>
 
-                <div className="absolute bottom-7 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 opacity-[0.35] animate-[fadeIn_1.5s_2s_ease_both]">
+                <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 opacity-[0.35] animate-[fadeIn_1.5s_2s_ease_both]">
                     <span className="mono-xs !tracking-[0.12em] !text-[var(--text-3)]">
                         scroll
                     </span>
