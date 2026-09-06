@@ -11,6 +11,7 @@ export default function NavBar() {
     const [progress, setProgress] = useState(0);
     const [active, setActive] = useState("home");
     const {theme, toggleTheme} = useTheme();
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         const onScroll = () => {
@@ -66,7 +67,7 @@ export default function NavBar() {
             bg-[linear-gradient(90deg,var(--accent),var(--violet))] shadow-[0_0_10px_var(--accent-glow)]" style={{width: `${progress}%`}} />
 
             <nav className={`fixed left-0 right-0 top-0 z-50 border-b transition-all duration-300
-            ${scrolled ?`border-[var(--border)] backdrop-blur-[22px] bg-[var(--surface)]` : `border-transparent bg-transparent backdrop-blur-none`}`}>
+            ${scrolled || menuOpen ?`border-[var(--border)] backdrop-blur-[22px] bg-[var(--surface)]` : `border-transparent bg-transparent backdrop-blur-none`}`}>
                 <div className="mx-auto max-w-6xl px-5 sm:px-8">
                     <div className="flex h-[62px] items-center justify-between pt-[2px]">
                         <a href="#home" className="group flex items-center gap-2.5 no-underline">
@@ -198,6 +199,66 @@ export default function NavBar() {
                                     <path d="M5 12h14M12 5l7 7-7 7" />
                                     </svg>
                             </a>
+
+                            <button onClick={() => setMenuOpen(!menuOpen)}
+                            aria-label={menuOpen ? "Close menu" : "Open menu"}
+                            aria-expanded={menuOpen}
+                            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[9px] border border-[var(--border)]
+                            bg-[var(--surface2)] text-[var(--text-2)] transition-all duration-200 hover:border-[var(--border-glow)] hover:text-[var(--accent-light)]
+                            md:hidden">
+                                {menuOpen ? (
+                                    <svg
+                                        width="17"
+                                        height="17"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                    >
+                                        <path d="M6 6l12 12" />
+                                        <path d="M18 6L6 18" />
+                                    </svg>
+                                ) : (
+                                  <svg
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                >
+                                    <line x1="4" y1="7" x2="20" y2="7" />
+                                    <line x1="4" y1="12" x2="20" y2="12" />
+                                    <line x1="4" y1="17" x2="20" y2="17" />
+                                </svg>  
+                                )}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className={`overflow-hidden transition-all duration-200 md:hidden ${
+                        menuOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
+                    }`}>
+                        <div className="border-t border-[var(--border)] py-3">
+                            {LINKS.map((link) => {
+                                const id = link.toLocaleLowerCase();
+                                const isActive = active === id;
+
+                                return (
+                                    <a key={link}
+                                    href={`#${id}`}
+                                    onClick={() => setMenuOpen(false)}
+                                    className={`flex items-center rounded-[8px] px-3 py-3 text-[13px] no-underline transition-all duration-200 ${
+                                        isActive
+                                        ? "bg-[var(--accent-pale)] font-semibold text-[var(--accent-light)]"
+                                        : "font-medium text-[var(--text-2)] hover:bg-[var(--surface2)] hover:text-[var(--text)]"
+                                    }`}>
+                                        {link}
+                                    </a>
+                                )
+                            })}
+
+                        
                         </div>
                     </div>
                 </div>
