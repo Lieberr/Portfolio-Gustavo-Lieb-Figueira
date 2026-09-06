@@ -66,7 +66,7 @@ export default function NavBar() {
             bg-[linear-gradient(90deg,var(--accent),var(--violet))] shadow-[0_0_10px_var(--accent-glow)]" style={{width: `${progress}%`}} />
 
             <nav className={`fixed left-0 right-0 top-0 z-50 border-b transition-all duration-300
-            ${scrolled ? `border-[var(--border)] backdrop-blur-[22px] bg-[rgba(7,7,15,0.88)]` : `border-transparent bg-transparent backdrop-blur-none`}`}>
+            ${scrolled ?`border-[var(--border)] backdrop-blur-[22px] bg-[var(--surface)]` : `border-transparent bg-transparent backdrop-blur-none`}`}>
                 <div className="mx-auto max-w-6xl px-5 sm:px-8">
                     <div className="flex h-[62px] items-center justify-between pt-[2px]">
                         <a href="#home" className="group flex items-center gap-2.5 no-underline">
