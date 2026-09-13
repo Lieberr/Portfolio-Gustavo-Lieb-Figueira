@@ -283,6 +283,7 @@ export default function Projects() {
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     async function loadProjects() {
@@ -302,6 +303,31 @@ export default function Projects() {
 
   const featured = projects.find((project) => project.featured);
   const rest = projects.filter((project) => !project.featured);
+
+  // Logica paginacao
+
+  const projectsPerPage = 3;
+
+  const totalPages = Math.ceil(rest.length / projectsPerPage);
+
+  const startIndex = currentPage * projectsPerPage;
+
+  const currentProjects = rest.slice(
+    startIndex,
+    startIndex + projectsPerPage
+  );
+
+  const nextPage = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage((prev) => prev + 1)
+    }
+  }
+
+  const previousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage((prev) => prev - 1)
+    }
+  }
 
   return (
     <section id="projects" ref={secRef} className="relative overflow-hidden py-28">
@@ -501,7 +527,7 @@ export default function Projects() {
             </div>
 
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {rest.map((project, index) => (
+              {currentProjects.map((project, index) => (
                 <div key={project.id}
                 className={`project-card card reveal ${
                   visible ? "visible" : ""
@@ -592,6 +618,31 @@ export default function Projects() {
                 </div>
               ))}
             </div>
+
+            {totalPages > 1 && (
+              <div className="mt-8 flex items-center justify-center gap-4">
+                <button
+                onClick={previousPage}
+                disabled={currentPage === 0}
+                aria-label="Previous projects"
+                className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-2)] transition-all hover:border-[var(--accent-light)] hover:text-[var(--accent-light)] disabled:pointer-events-none disabled:opacity-30">
+                  ←
+                </button>
+
+                <span className="font-mono text-xs text-[var(--text-3)]">
+                  {String(currentPage + 1).padStart(2, "0")} /{" "}
+                  {String(totalPages).padStart(2, "0")}
+                </span>
+
+                <button
+                onClick={nextPage}
+                disabled={currentPage === totalPages - 1}
+                aria-label="Next projects"
+                className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-2)] transition-all hover:border-[var(--accent-light)] hover:text-[var(--accent-light)] disabled:pointer-events-none disabled:opacity-30">
+                  →
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>
